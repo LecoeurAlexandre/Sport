@@ -20,15 +20,20 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "activity_id"))
     private List<Activity> activities;
+    @ManyToOne
+    @JoinColumn(name = "fav_sport_id")
+    private FavoriteSport favoriteSport;
 
     public User() {
     }
 
-    public User(String firstName, String lastName, LocalDate birthDate) {
+    public User(String firstName, String lastName, LocalDate birthDate, FavoriteSport favoriteSport) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = birthDate;
+        this.favoriteSport = favoriteSport;
     }
+
     public void addActivity(Activity activity) {
         this.activities.add(activity);
     }

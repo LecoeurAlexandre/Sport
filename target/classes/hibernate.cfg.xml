@@ -6,5 +6,6 @@
     <session-factory>
         <mapping class="org.example.entities.User"/>
         <mapping class="org.example.entities.Activity"/>
+        <mapping class="org.example.entities.FavoriteSport"/>
     </session-factory>
 </hibernate-configuration>

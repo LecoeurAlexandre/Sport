@@ -1,6 +1,5 @@
 package org.example.service;
 
-import org.example.entities.Activity;
 import org.example.entities.User;
 import org.example.interfaces.Repository;
 import org.hibernate.query.Query;
@@ -54,5 +53,10 @@ public class UserService extends BaseService implements Repository<User> {
         userList = userQuery.list();
         session.close();
         return userList;
+    }
+
+    @Override
+    public void end() {
+        sessionFactory.close();
     }
 }

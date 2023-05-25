@@ -54,6 +54,12 @@ public class ActivityService extends BaseService implements Repository<Activity>
         session.close();
         return activityList;
     }
+
+    @Override
+    public void end() {
+        sessionFactory.close();
+    }
+
     public List<Activity> findByAvailability() {
         List<Activity> activityList = null;
         session = sessionFactory.openSession();
