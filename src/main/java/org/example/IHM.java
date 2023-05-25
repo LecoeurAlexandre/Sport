@@ -31,6 +31,9 @@ public class IHM {
                 case "2":
                     displayAllUsers();
                     break;
+                case "3":
+                    modifyUser();
+                    break;
             }
 
         } while(!choice.equals("0"));
@@ -65,13 +68,33 @@ public class IHM {
         }
     }
     public void displayAllUsers() {
+        System.out.println("-- Liste des adhérents --");
         List<User> users = userService.findAll();
         for (User u : users) {
             System.out.println(u);
         }
     }
     public void modifyUser() {
-
+        System.out.println("-- Modifier les informations d'un adhérent --");
+        System.out.println("Veuillez saisir l'id de l'adhérent ?");
+        int id = sc.nextInt();
+        sc.nextLine();
+        User user = userService.findById(id);
+        System.out.println("Veuillez saisir le prénom");
+        String firstName = sc.nextLine();
+        user.setFirstName(firstName);
+        System.out.println("Veuillez saisir le nom");
+        String lastName = sc.nextLine();
+        user.setLastName(lastName);
+        System.out.println("Veuillez saisir la date de naissance (format aaaa-mm-jj)");
+        String birthDate = sc.nextLine();
+        try {
+            LocalDate date = LocalDate.parse(birthDate, DateTimeFormatter.ISO_DATE);
+            user.setBirthDate(date);
+            userService.update(user);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 
 }

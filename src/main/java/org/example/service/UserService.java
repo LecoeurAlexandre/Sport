@@ -24,7 +24,12 @@ public class UserService extends BaseService implements Repository<User> {
 
     @Override
     public boolean update(User o) {
-        return false;
+        session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.update(o);
+        session.getTransaction().commit();
+        session.close();
+        return true;
     }
 
     @Override
@@ -34,7 +39,11 @@ public class UserService extends BaseService implements Repository<User> {
 
     @Override
     public User findById(int id) {
-        return null;
+        User user = null;
+        session = sessionFactory.openSession();
+        user = (User) session.get(User.class, id);
+        session.close();
+        return user;
     }
 
     @Override
