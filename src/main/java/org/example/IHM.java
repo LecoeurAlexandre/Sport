@@ -6,6 +6,7 @@ import org.example.service.UserService;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Scanner;
 
 public class IHM {
@@ -27,6 +28,9 @@ public class IHM {
                 case "1":
                     addNewUser();
                     break;
+                case "2":
+                    displayAllUsers();
+                    break;
             }
 
         } while(!choice.equals("0"));
@@ -36,7 +40,7 @@ public class IHM {
         System.out.println("++++++++  Menu  ++++++++");
         System.out.println("++ Espace adhérent ++");
         System.out.println("1 -- Ajouter un nouvel adhérent ");
-        System.out.println("2 -- Afficher un nouvel adhérent");
+        System.out.println("2 -- Afficher tous les adhérents");
         System.out.println("3 -- Modifier un adhérent");
         System.out.println("++ Espace activités ++");
         System.out.println("4 -- Ajouter une nouvelle activité");
@@ -59,9 +63,14 @@ public class IHM {
         } catch (Exception e){
             System.out.println(e.getMessage());
         }
-
-
-
+    }
+    public void displayAllUsers() {
+        List<User> users = userService.findAll();
+        for (User u : users) {
+            System.out.println(u);
+        }
+    }
+    public void modifyUser() {
 
     }
 

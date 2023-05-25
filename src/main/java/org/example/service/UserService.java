@@ -3,6 +3,7 @@ package org.example.service;
 import org.example.entities.Activity;
 import org.example.entities.User;
 import org.example.interfaces.Repository;
+import org.hibernate.query.Query;
 
 import java.util.List;
 
@@ -38,6 +39,11 @@ public class UserService extends BaseService implements Repository<User> {
 
     @Override
     public List<User> findAll() {
-        return null;
+        List<User> userList = null;
+        session = sessionFactory.openSession();
+        Query<User> userQuery = session.createQuery("from User");
+        userList = userQuery.list();
+        session.close();
+        return userList;
     }
 }
