@@ -1,10 +1,12 @@
 package org.example;
 
+import org.example.entities.Activity;
 import org.example.entities.User;
 import org.example.service.ActivityService;
 import org.example.service.UserService;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
@@ -33,6 +35,9 @@ public class IHM {
                     break;
                 case "3":
                     modifyUser();
+                    break;
+                case "4" :
+                    addNewActivity();
                     break;
             }
 
@@ -93,6 +98,26 @@ public class IHM {
             user.setBirthDate(date);
             userService.update(user);
         }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void addNewActivity() {
+        System.out.println("-- Ajouter une nouvelle activité au programme --");
+        System.out.println("Veuillez saisir le nom de l'activité");
+        String name = sc.nextLine();
+        System.out.println("Veuillez saisir la date de l'activité (format aaaa-mm-jj)");
+        String activityDate = sc.nextLine();
+        System.out.println("Veuillez saisir l'heure (format hh:mm:ss)");
+        String activityHour = sc.nextLine();
+        System.out.println("Veuillez saisir l'âge minimum ?");
+        int minAge = sc.nextInt();
+        sc.nextLine();
+        try {
+            LocalDate date = LocalDate.parse(activityDate, DateTimeFormatter.ISO_DATE);
+            LocalTime time = LocalTime.parse(activityHour);
+            activityService.create(new Activity(name, date, time, minAge));
+        } catch (Exception e){
             System.out.println(e.getMessage());
         }
     }

@@ -11,7 +11,12 @@ public class ActivityService extends BaseService implements Repository<Activity>
     }
     @Override
     public boolean create(Activity o) {
-        return false;
+        session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.save(o);
+        session.getTransaction().commit();
+        session.close();
+        return true;
     }
 
     @Override
