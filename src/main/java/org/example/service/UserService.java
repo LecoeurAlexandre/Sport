@@ -33,7 +33,12 @@ public class UserService extends BaseService implements Repository<User> {
 
     @Override
     public boolean delete(User o) {
-        return false;
+        session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.delete(o);
+        session.getTransaction().commit();
+        session.close();
+        return true;
     }
 
     @Override

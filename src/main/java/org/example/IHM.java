@@ -42,21 +42,24 @@ public class IHM {
                     modifyUser();
                     break;
                 case "4" :
-                    addNewActivity();
+                    deleteUser();
                     break;
                 case "5" :
-                    displayAllActivities();
+                    addNewActivity();
                     break;
                 case "6" :
-                    displayAvailableActivities();
+                    displayAllActivities();
                     break;
                 case "7" :
-                    displayAvailableActivitiesByAge();
+                    displayAvailableActivities();
                     break;
                 case "8" :
-                    bookActivity();
+                    displayAvailableActivitiesByAge();
                     break;
                 case "9" :
+                    bookActivity();
+                    break;
+                case "10" :
                     addNewSport();
                     break;
             }
@@ -73,14 +76,15 @@ public class IHM {
         System.out.println("1 -- Ajouter un nouvel adhérent ");
         System.out.println("2 -- Afficher tous les adhérents");
         System.out.println("3 -- Modifier un adhérent");
+        System.out.println("4 -- Supprimer un adhérent");
         System.out.println("++ Espace activités ++");
-        System.out.println("4 -- Ajouter une nouvelle activité");
-        System.out.println("5 -- Afficher toutes les activités");
-        System.out.println("6 -- Afficher toutes les activités disponibles");
-        System.out.println("7 -- Afficher toutes les activités disponibles par rapport à l'âge de l'adhérent");
-        System.out.println("8 -- Réserver une activité");
-        System.out.println("++ Espace activités ++");
-        System.out.println("9 -- Ajouter un sport");
+        System.out.println("5 -- Ajouter une nouvelle activité");
+        System.out.println("6 -- Afficher toutes les activités");
+        System.out.println("7 -- Afficher toutes les activités disponibles");
+        System.out.println("8 -- Afficher toutes les activités disponibles selon l'âge de l'adhérent");
+        System.out.println("9 -- Réserver une activité");
+        System.out.println("++ Espace sports préférés ++");
+        System.out.println("10 -- Ajouter un sport");
         System.out.println("0 -- Quitter ");
     }
 
@@ -100,6 +104,7 @@ public class IHM {
             try {
                 LocalDate date = LocalDate.parse(birthDate, DateTimeFormatter.ISO_DATE);
                 userService.create(new User(firstName, lastName, date, favoriteSport));
+                System.out.println("Utilisateur créé");
             } catch (Exception e){
                 System.out.println(e.getMessage());
             }
@@ -133,8 +138,29 @@ public class IHM {
             LocalDate date = LocalDate.parse(birthDate, DateTimeFormatter.ISO_DATE);
             user.setBirthDate(date);
             userService.update(user);
+            System.out.println("Utilisateur modifié");
         }catch (Exception e){
             System.out.println(e.getMessage());
+        }
+    }
+    public void deleteUser() {
+        System.out.println("-- Supprimer un adhérent --");
+        System.out.println("Veuillez saisir l'id de l'adhérent ?");
+        int id = sc.nextInt();
+        sc.nextLine();
+        User user = userService.findById(id);
+        if (user != null) {
+            // incrémentation du nombre de places de chaque activité avant suppression de l'utilisateur
+            for (Activity u : user.getActivities()) {
+                System.out.println(u);
+                Activity activity = activityService.findById(u.getId());
+                activity.increaseRegistrationsAvailable();
+                activityService.update(activity);
+            }
+            userService.delete(user);
+            System.out.println("Utilisateur supprimé");
+        } else {
+            System.out.println("L'id de l'adhérent demandé n'existe pas");
         }
     }
 
@@ -156,6 +182,7 @@ public class IHM {
             LocalDate date = LocalDate.parse(activityDate, DateTimeFormatter.ISO_DATE);
             LocalTime time = LocalTime.parse(activityHour);
             activityService.create(new Activity(name, date, time, minAge, nb));
+            System.out.println("Activité créé");
         } catch (Exception e){
             System.out.println(e.getMessage());
         }
@@ -218,6 +245,7 @@ public class IHM {
                         activity.setRegistrationsAvailable();
                         userService.update(user);
                         activityService.update(activity);
+                        System.out.println("Activité réservée");
                     } else {
                         System.out.println("L'adhérent est trop jeune pour cette activité");
                     }

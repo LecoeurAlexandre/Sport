@@ -78,6 +78,9 @@ public class Activity {
     public void setRegistrationsAvailable() {
         this.registrationsAvailable -= 1;
     }
+    public void increaseRegistrationsAvailable() {
+        this.registrationsAvailable += 1;
+    }
 
     @Override
     public String toString() {

@@ -84,6 +84,7 @@ public class User {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", birthDate=" + birthDate +
+                ", activities=" + activities +
                 '}';
     }
 }
