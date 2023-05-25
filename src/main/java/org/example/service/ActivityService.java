@@ -2,6 +2,7 @@ package org.example.service;
 
 import org.example.entities.Activity;
 import org.example.interfaces.Repository;
+import org.hibernate.query.Query;
 
 import java.util.List;
 
@@ -36,6 +37,19 @@ public class ActivityService extends BaseService implements Repository<Activity>
 
     @Override
     public List<Activity> findAll() {
-        return null;
+        List<Activity> activityList = null;
+        session = sessionFactory.openSession();
+        Query<Activity> activityQuery = session.createQuery("from Activity");
+        activityList = activityQuery.list();
+        session.close();
+        return activityList;
+    }
+    public List<Activity> findByAvailability() {
+        List<Activity> activityList = null;
+        session = sessionFactory.openSession();
+        Query<Activity> activityQuery = session.createQuery("from Activity where registrationsAvailable > 0");
+        activityList = activityQuery.list();
+        session.close();
+        return activityList;
     }
 }

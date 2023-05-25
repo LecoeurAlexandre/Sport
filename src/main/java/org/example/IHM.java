@@ -39,6 +39,11 @@ public class IHM {
                 case "4" :
                     addNewActivity();
                     break;
+                case "5" :
+                    displayAllActivities();
+                    break;
+                case "6" :
+                    displayAvailableActivities();
             }
 
         } while(!choice.equals("0"));
@@ -46,14 +51,15 @@ public class IHM {
 
     public void menu() {
         System.out.println("++++++++  Menu  ++++++++");
-        System.out.println("++ Espace adhérent ++");
+        System.out.println("++ Espace adhérents ++");
         System.out.println("1 -- Ajouter un nouvel adhérent ");
         System.out.println("2 -- Afficher tous les adhérents");
         System.out.println("3 -- Modifier un adhérent");
         System.out.println("++ Espace activités ++");
         System.out.println("4 -- Ajouter une nouvelle activité");
-        System.out.println("5 -- Afficher toutes les activités disponibles");
-        System.out.println("6 -- Réserver une activité");
+        System.out.println("5 -- Afficher toutes les activités");
+        System.out.println("6 -- Afficher toutes les activités disponibles");
+        System.out.println("7 -- Réserver une activité");
         System.out.println("0 -- Quitter ");
     }
 
@@ -113,12 +119,31 @@ public class IHM {
         System.out.println("Veuillez saisir l'âge minimum ?");
         int minAge = sc.nextInt();
         sc.nextLine();
+        System.out.println("Veuillez saisir le nombre de places ?");
+        int nb = sc.nextInt();
+        sc.nextLine();
         try {
             LocalDate date = LocalDate.parse(activityDate, DateTimeFormatter.ISO_DATE);
             LocalTime time = LocalTime.parse(activityHour);
-            activityService.create(new Activity(name, date, time, minAge));
+            activityService.create(new Activity(name, date, time, minAge, nb));
         } catch (Exception e){
             System.out.println(e.getMessage());
+        }
+    }
+
+    public void displayAllActivities() {
+        System.out.println("-- Liste de toutes les activités --");
+        List<Activity> activities = activityService.findAll();
+        for (Activity u : activities) {
+            System.out.println(u);
+        }
+    }
+
+    public void displayAvailableActivities() {
+        System.out.println("-- Liste des activités disponibles--");
+        List<Activity> activities = activityService.findByAvailability();
+        for (Activity u : activities) {
+            System.out.println(u);
         }
     }
 

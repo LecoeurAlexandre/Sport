@@ -17,15 +17,17 @@ public class Activity {
     private LocalDate date;
     private LocalTime hour;
     private int minAge;
+    private int registrationsAvailable;
 
     public Activity() {
     }
 
-    public Activity(String name, LocalDate date, LocalTime hour, int minAge) {
+    public Activity(String name, LocalDate date, LocalTime hour, int minAge, int registrationsAvailable) {
         this.name = name;
         this.date = date;
         this.hour = hour;
         this.minAge = minAge;
+        this.registrationsAvailable = registrationsAvailable;
     }
 
 
@@ -69,13 +71,23 @@ public class Activity {
         this.minAge = minAge;
     }
 
+    public int getRegistrationsAvailable() {
+        return registrationsAvailable;
+    }
+
+    public void setRegistrationsAvailable(int registrationsAvailable) {
+        this.registrationsAvailable = registrationsAvailable;
+    }
+
     @Override
     public String toString() {
         return "Activity{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", date=" + date +
+                ", hour=" + hour +
                 ", minAge=" + minAge +
+                ", registrationsAvailable=" + registrationsAvailable +
                 '}';
     }
 }
