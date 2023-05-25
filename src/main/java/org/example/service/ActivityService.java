@@ -68,4 +68,13 @@ public class ActivityService extends BaseService implements Repository<Activity>
         session.close();
         return activityList;
     }
+    public List<Activity> findByAvailabilityAge(int age) {
+        List<Activity> activityList = null;
+        session = sessionFactory.openSession();
+        Query<Activity> activityQuery = session.createQuery("from Activity where registrationsAvailable > 0 and minAge < :age");
+        activityQuery.setParameter("age", age);
+        activityList = activityQuery.list();
+        session.close();
+        return activityList;
+    }
 }

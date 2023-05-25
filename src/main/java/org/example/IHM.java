@@ -51,9 +51,12 @@ public class IHM {
                     displayAvailableActivities();
                     break;
                 case "7" :
-                    bookActivity();
+                    displayAvailableActivitiesByAge();
                     break;
                 case "8" :
+                    bookActivity();
+                    break;
+                case "9" :
                     addNewSport();
                     break;
             }
@@ -74,9 +77,10 @@ public class IHM {
         System.out.println("4 -- Ajouter une nouvelle activité");
         System.out.println("5 -- Afficher toutes les activités");
         System.out.println("6 -- Afficher toutes les activités disponibles");
-        System.out.println("7 -- Réserver une activité");
+        System.out.println("7 -- Afficher toutes les activités disponibles par rapport à l'âge de l'adhérent");
+        System.out.println("8 -- Réserver une activité");
         System.out.println("++ Espace activités ++");
-        System.out.println("8 -- Ajouter un sport");
+        System.out.println("9 -- Ajouter un sport");
         System.out.println("0 -- Quitter ");
     }
 
@@ -170,6 +174,29 @@ public class IHM {
         List<Activity> activities = activityService.findByAvailability();
         for (Activity u : activities) {
             System.out.println(u);
+        }
+    }
+    public void displayAvailableActivitiesByAge() {
+        System.out.println("-- Liste des activités disponibles selon l'âge--");
+        System.out.println("Veuillez saisir l'id de l'adhérent ?");
+        int id = sc.nextInt();
+        sc.nextLine();
+        User user = userService.findById(id);
+        if (user != null) {
+            long a = calcAge(user.getBirthDate());
+            int age=(int)a;
+            List<Activity> activities = activityService.findByAvailabilityAge(age);
+            if (activities.size() != 0) {
+                System.out.println("-- Liste des activités disponibles pour "+user.getFirstName()+" "+user.getLastName() +" --");
+                for (Activity u : activities) {
+                    System.out.println(u);
+                }
+            } else {
+                System.out.println("-- Aucune activité disponible pour "+user.getFirstName()+" "+user.getLastName() +" --");
+            }
+
+        } else {
+            System.out.println("L'id de l'adhérent demandé n'existe pas");
         }
     }
     public void bookActivity() {
