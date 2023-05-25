@@ -1,6 +1,6 @@
 # Sport Center #
 ## Description du projet ##
-Programme en console permettant de gérer un centre de sports
+Programme en console permettant de gérer un centre sportif.
 
 ## Technologies utilisées ##
 - Langage de programmation : Java SE
@@ -12,7 +12,7 @@ Programme en console permettant de gérer un centre de sports
 - Créer et modifier les données d'un adhérent (prénom, nom, date de naissance, sport favori)
 - Créer une activité (nom, jour, heure, âge minimum, nombre de place)
 - Inscrire un adhérent en veillant à l'âge et au nombre de places encore disponibles.
-- Afficher tous les adhérents, toutes les activités, toutes les activités dont il reste des places
+- Afficher tous les adhérents, toutes les activités, les activités dont il reste des places, les activités disponibles selon l'âge de l'adhérent.
 
 ## Structure du projet ##
 ### Entités ###
@@ -28,5 +28,6 @@ L'interface homme machine permet de demander et récupérer les saisies utilisat
 
 Chaque service implémente une interface Repository contenant les méthodes courantes.
 
-Chaque service hérite de BaseService, qui gère la session.
+Chaque service hérite de BaseService, qui gère la création de session.
 
+![diagramme classe](/assets/diag_classe.png)
