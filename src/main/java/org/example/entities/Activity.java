@@ -75,8 +75,8 @@ public class Activity {
         return registrationsAvailable;
     }
 
-    public void setRegistrationsAvailable(int registrationsAvailable) {
-        this.registrationsAvailable = registrationsAvailable;
+    public void setRegistrationsAvailable() {
+        this.registrationsAvailable -= 1;
     }
 
     @Override

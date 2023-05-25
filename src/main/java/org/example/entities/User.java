@@ -29,7 +29,9 @@ public class User {
         this.lastName = lastName;
         this.birthDate = birthDate;
     }
-
+    public void addActivity(Activity activity) {
+        this.activities.add(activity);
+    }
     public int getId() {
         return id;
     }
@@ -60,6 +62,14 @@ public class User {
 
     public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public List<Activity> getActivities() {
+        return activities;
+    }
+
+    public void setActivities(List<Activity> activities) {
+        this.activities = activities;
     }
 
     @Override

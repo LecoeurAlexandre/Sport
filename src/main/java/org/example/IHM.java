@@ -44,6 +44,10 @@ public class IHM {
                     break;
                 case "6" :
                     displayAvailableActivities();
+                    break;
+                case "7" :
+                    bookActivity();
+                    break;
             }
 
         } while(!choice.equals("0"));
@@ -140,11 +144,41 @@ public class IHM {
     }
 
     public void displayAvailableActivities() {
-        System.out.println("-- Liste des activités disponibles--");
+        System.out.println("-- Liste des activités disponibles --");
         List<Activity> activities = activityService.findByAvailability();
         for (Activity u : activities) {
             System.out.println(u);
         }
+    }
+    public void bookActivity() {
+        System.out.println("-- Réserver une activité --");
+        System.out.println("Veuillez saisir l'id de l'adhérent ?");
+        int userId = sc.nextInt();
+        sc.nextLine();
+        User user = userService.findById(userId);
+        if (user != null) {
+            System.out.println(user.getFirstName() + " " + user.getLastName());
+            System.out.println("Veuillez saisir l'id de l'activité ?");
+            int ActivityId = sc.nextInt();
+            sc.nextLine();
+            Activity activity = activityService.findById(ActivityId);
+            if (activity != null) {
+                if (activity.getRegistrationsAvailable()>0) {
+                    user.addActivity(activity);
+                    activity.setRegistrationsAvailable();
+                    userService.update(user);
+                    activityService.update(activity);
+                }else{
+                    System.out.println("Il n'y a plus de place disponible pour cette activité");
+                }
+            }else{
+                System.out.println("L'id de l'activité demandé n'existe pas");
+            }
+        } else {
+            System.out.println("L'id de l'adhérent demandé n'existe pas");
+        }
+
+
     }
 
 }

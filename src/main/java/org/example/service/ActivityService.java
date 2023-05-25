@@ -1,6 +1,7 @@
 package org.example.service;
 
 import org.example.entities.Activity;
+import org.example.entities.User;
 import org.example.interfaces.Repository;
 import org.hibernate.query.Query;
 
@@ -22,7 +23,12 @@ public class ActivityService extends BaseService implements Repository<Activity>
 
     @Override
     public boolean update(Activity o) {
-        return false;
+        session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.update(o);
+        session.getTransaction().commit();
+        session.close();
+        return true;
     }
 
     @Override
@@ -32,7 +38,11 @@ public class ActivityService extends BaseService implements Repository<Activity>
 
     @Override
     public Activity findById(int id) {
-        return null;
+        Activity activity = null;
+        session = sessionFactory.openSession();
+        activity = (Activity) session.get(Activity.class, id);
+        session.close();
+        return activity;
     }
 
     @Override
